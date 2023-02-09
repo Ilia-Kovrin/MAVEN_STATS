@@ -24,7 +24,7 @@ public class StatsService {
         int maxMonth = 0;
         int month = 0; // переменная для индекса рассматриваемого месяца в массиве
         for (long sale : sales) {
-            // sales[maxMonth] - продажи в месяце minMonth
+            // sales[maxMonth] - продажи в месяце maxMonth
             // sale - продажи в рассматриваемом месяце
             if (sale >= sales[maxMonth]) {
                 maxMonth = month;
@@ -37,41 +37,47 @@ public class StatsService {
     // Сумма всех продаж
 
     public long sumSales(long[] sales) {
-        long sumSales = Arrays.stream(sales).sum();
-        return sumSales;
+        long totalSale = 0;
+        for (long sale : sales) {
+            totalSale += sale;
+
+        }
+        return totalSale;
     }
 
     // Средняя сумма продаж в месяц
 
     public long averageSumSales(long[] sales) {
-        long averageSumSales = Arrays.stream(sales).sum() / sales.length;
-        return averageSumSales;
+        return sumSales(sales) / sales.length;
     }
 
     // Количество месяцев, в которых продажи были ниже среднего (см. п.2)
 
-    public long lowAverageSumSales(long[] sales) {
-        long averageSumSales = Arrays.stream(sales).sum() / sales.length;
-        int monthAmount = 0;
-        for (int i = 0; i < sales.length; i++) {
-            if (sales[i] < averageSumSales) {
-                monthAmount++;
+    public int lowAverageSumSales(long[] sales) {
+        int counter = 0;
+        long average = averageSumSales(sales);
+        for (long sale : sales) {
+            if (sale < average) {
+                counter++;
             }
         }
-        return monthAmount;
+        return counter;
+
     }
+
 
     // Количество месяцев, в которых продажи были выше среднего
 
-    public long upAverageSumSales(long[] sales) {
-        long averageSumSales = Arrays.stream(sales).sum() / sales.length;
-        int monthAmount = 0;
-        for (int i = 0; i < sales.length; i++) {
-            if (sales[i] > averageSumSales) {
-                monthAmount++;
+    public int upAverageSumSales(long[] sales) {
+        int counter = 0;
+        long average = averageSumSales(sales);
+        for (long sale : sales) {
+            if (sale > average) {
+                counter++;
             }
         }
-        return monthAmount;
+        return counter;
+
     }
 
 }
